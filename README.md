@@ -28,7 +28,6 @@ O servidor será iniciado na porta 3000 por padrão.
 
 ```json
 {
-  "usuario": "seu_usuario",
   "senha": "sua_senha"
 }
 ```
@@ -38,8 +37,7 @@ O servidor será iniciado na porta 3000 por padrão.
 ```json
 {
   "sucesso": true,
-  "usuario": "seu_usuario",
-  "hash": "$2a$10$HASH_GERADO_PELO_BCRYPT"
+  "hash": "$2b$10$HASH_GERADO_PELO_BCRYPT"
 }
 ```
 
@@ -52,7 +50,7 @@ O servidor será iniciado na porta 3000 por padrão.
 ```json
 {
   "senha": "sua_senha",
-  "hash": "$2a$10$HASH_PREVIAMENTE_GERADO"
+  "senhaHash": "$2b$10$HASH_PREVIAMENTE_GERADO"
 }
 ```
 

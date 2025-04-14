@@ -23,7 +23,7 @@ app.post('/hash', async (req, res) => {
       });
     }
 
-    // Gera o hash da senha como no Next.js
+    // Gera o hash da senha
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(senha, salt);
 
@@ -43,18 +43,18 @@ app.post('/hash', async (req, res) => {
 // Rota para verificar senha
 app.post('/verificar', async (req, res) => {
   try {
-    const { senha, hash } = req.body;
+    const { senha, senhaHash } = req.body;
 
     // Validação básica
-    if (!senha || !hash) {
+    if (!senha || !senhaHash) {
       return res.status(400).json({
         sucesso: false,
-        mensagem: 'Senha e hash são obrigatórios',
+        mensagem: 'Senha e senhaHash são obrigatórios',
       });
     }
 
-    // Compara a senha com o hash
-    const match = await bcrypt.compare(senha, hash);
+    // Compara a senha informada com o hash armazenado
+    const match = await bcrypt.compare(senha, senhaHash);
 
     res.json({
       sucesso: true,
