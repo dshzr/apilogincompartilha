@@ -10,10 +10,10 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Rota para gerar hash da senha (formato $2b$10)
+// Rota para gerar hash da senha
 app.post('/hash', async (req, res) => {
   try {
-    const { usuario, senha } = req.body;
+    const { senha } = req.body;
 
     // Validação básica
     if (!senha) {
@@ -23,12 +23,12 @@ app.post('/hash', async (req, res) => {
       });
     }
 
-    // Gera o hash da senha com bcrypt (formato $2b$10)
-    const hashedPassword = await bcrypt.hash(senha, 10);
+    // Gera o hash da senha como no Next.js
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(senha, salt);
 
     res.json({
       sucesso: true,
-      usuario,
       hash: hashedPassword,
     });
   } catch (erro) {
