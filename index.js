@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 const cors = require('cors');
 
 const app = express();
@@ -10,10 +10,10 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Rota para gerar hash da senha
+// Rota para gerar hash da senha (formato $2b$10)
 app.post('/hash', async (req, res) => {
   try {
-    const { senha } = req.body;
+    const { usuario, senha } = req.body;
 
     // Validação básica
     if (!senha) {
@@ -23,14 +23,13 @@ app.post('/hash', async (req, res) => {
       });
     }
 
-    // Gera o hash da senha
-    const salt = await bcrypt.genSalt(10);
-    const senhaHash = await bcrypt.hash(senha, salt);
+    // Gera o hash da senha com bcrypt (formato $2b$10)
+    const hashedPassword = await bcrypt.hash(senha, 10);
 
     res.json({
       sucesso: true,
-
-      hash: senhaHash,
+      usuario,
+      hash: hashedPassword,
     });
   } catch (erro) {
     console.error(erro);
